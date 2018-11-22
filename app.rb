@@ -14,6 +14,12 @@ body = Net::HTTP.get(uri)
 document = Nokogiri::HTML(body)
 links = document.css('li a')
 
+puts links
+
 links.each do |link|
-	puts link.text, " #{link['href']} ", "\n"
+	puts "#{link['href']}" + "\n"
+
+	f = File.open 'links.xml', "a"
+	f.write "#{links.txt}" + "\n"
+	f.close
 end
