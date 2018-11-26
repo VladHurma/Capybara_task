@@ -47,17 +47,16 @@ end
 
 
 def links_sort_and_clean_up
-	@valid_hrefs << @links.select { |url| url.match?(/people.onliner.by/i) }
-=begin
 	@links.each do |link|
 		if link['href'] =~ /people.onliner.by/i ||
 			link['href'] =~ /auto.onliner.by/i ||
 			link['href'] =~ /tech.onliner.by/i ||
 			link['href'] =~ /realt.onliner.by/i
-			@valid_hrefs << link['href']
+			if link['href'].include? '2018'
+				@valid_hrefs << link['href']
+			end
 		end
 	end
-=end
 	puts @valid_hrefs
 end
 
