@@ -3,7 +3,7 @@
 class Content_getter
   def initialize(browser)
     @browser = browser
-    @links
+    @links = []
     @content = []
     @valid_hrefs = []
   end
@@ -23,22 +23,20 @@ class Content_getter
   def get_links_from_onliner
     @browser.visit 'https://www.onliner.by/'
 
-    uri = URI('https://www.onliner.by/')
-    body = Net::HTTP.get(uri)
-
-    document = Nokogiri::HTML(body)
-    @links = document.css('li a')
+    @browser.all('a').each do |a_body|
+      @links << a_body['href']
+    end
   end
 
   def links_sort_and_clean_up
     @links.each do |link|
-      next unless link['href'] =~ /people.onliner.by/i ||
-                  link['href'] =~ /auto.onliner.by/i ||
-                  link['href'] =~ /tech.onliner.by/i ||
-                  link['href'] =~ /realt.onliner.by/i
+      next unless link =~ /people.onliner.by/i ||
+                  link =~ /auto.onliner.by/i ||
+                  link =~ /tech.onliner.by/i ||
+                  link =~ /realt.onliner.by/i
 
-      if (link['href'].include? '2018') & (!link['href'].include? '#comments')
-        @valid_hrefs << link['href']
+      if (link.include? '2018') & (!link.include? '#comments')
+        @valid_hrefs << link
       end
     end
     @valid_hrefs.uniq!.sort!

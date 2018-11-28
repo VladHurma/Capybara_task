@@ -3,7 +3,6 @@
 $LOAD_PATH.unshift('.')
 
 require 'selenium-webdriver'
-require 'nokogiri'
 require 'capybara'
 require 'csv_maker'
 require 'content_getter'
